@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TT2ReportUploaded;
 use App\Http\Requests\TT2Request;
+use Illuminate\Http\Request;
 
 class TT2Controller extends Controller
 {
@@ -96,5 +98,17 @@ class TT2Controller extends Controller
         }
 
         return response()->json($selectedTargets);
+    }
+
+    /**
+     * Receive uploaded raid report file
+     */
+    public function uploadRaidReport(Request $request)
+    {
+        $file = $request->file('file');
+
+        TT2ReportUploaded::dispatch($file);
+
+        return response()->json(['message' => 'File uploaded successfully!']);
     }
 }

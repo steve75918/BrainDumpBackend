@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/tt2/raid_target', [TT2Controller::class, 'raidTargetCalc']);
+Route::post('/tt2/upload', [TT2Controller::class, 'uploadRaidReport']);
