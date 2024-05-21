@@ -44,6 +44,12 @@ return [
             'throw' => false,
         ],
 
+        'tt2Raid' => [
+            'driver' => 'local',
+            'root' => storage_path('app/tt2_raid_reports'),
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
