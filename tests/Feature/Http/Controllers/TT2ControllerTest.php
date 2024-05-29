@@ -6,6 +6,7 @@ use App\Events\TT2ReportUploaded;
 use App\Listeners\AnalyzeTT2Report;
 use App\Models\TT2Member;
 use App\Models\TT2Raid;
+use Database\Seeders\TT2Seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -196,8 +197,6 @@ class TT2ControllerTest extends TestCase
         $listener = new AnalyzeTT2Report();
         $listener->handle($event);
 
-
-
         // Expections
         // Check file save into storage
         Storage::disk('tt2Raid')->assertExists($event->file->hashName());
@@ -248,5 +247,36 @@ class TT2ControllerTest extends TestCase
                 ]
             );
         }
+    }
+
+    /**
+     * Response of raid attendancy
+     *
+     * @return void
+     */
+    #[Test]
+    public function raidAttendance()
+    {
+        // Prepare
+        $this->seed(TT2Seeder::class);
+
+        // Action
+        $response = $this->postJson('/api/tt2/raid_attendance');
+
+        // Expections
+        $response
+            ->assertOk()
+            ->assertJsonStructure([
+                '*' => [
+                    'memberName',
+                    'memberCode',
+                    'raids' => [
+                        '*' => [
+                            'raidBatch',
+                            'attendance',
+                        ]
+                    ]
+                ]
+            ]);
     }
 }

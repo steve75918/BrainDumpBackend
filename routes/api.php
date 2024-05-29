@@ -8,5 +8,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/tt2/raid_target', [TT2Controller::class, 'raidTargetCalc']);
-Route::post('/tt2/upload', [TT2Controller::class, 'uploadRaidReport']);
+Route::prefix('tt2')->group(function () {
+    Route::post('/raid_target', [TT2Controller::class, 'raidTargetCalc']);
+    Route::post('/upload', [TT2Controller::class, 'uploadRaidReport']);
+    Route::post('/raid_attendance', [TT2Controller::class, 'raidAttendance']);
+});
+
