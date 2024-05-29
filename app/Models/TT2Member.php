@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TT2Member extends Model
 {
@@ -23,7 +24,10 @@ class TT2Member extends Model
      */
     protected $fillable = ['name', 'member_code'];
 
-    public function raidStatistics()
+    /**
+     * Get the raidStatistics for the member.
+     */
+    public function raidStatistics(): HasMany
     {
         return $this->hasMany(TT2RaidStatistic::class, 'member_id');
     }
