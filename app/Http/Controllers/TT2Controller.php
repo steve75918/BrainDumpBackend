@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\TT2ReportUploaded;
 use App\Http\Requests\TT2Request;
+use App\Models\TT2Member;
 use Illuminate\Http\Request;
 
 class TT2Controller extends Controller
@@ -110,5 +111,25 @@ class TT2Controller extends Controller
         TT2ReportUploaded::dispatch($file);
 
         return response()->json(['message' => 'File uploaded successfully!']);
+    }
+
+    public function raidAttendance(Request $request)
+    {
+        $members = TT2Member::with(['raidStatistics.raid'])->get();
+
+        $output = $members->map(function ($member) {
+            return [
+                'memberName' => $member->name,
+                'memberCode' => $member->member_code,
+                'raids'  => $member->raidStatistics->map(function ($stat) {
+                    return [
+                        'raidBatch'   => $stat->raid->batch_name,
+                        'attendance' => $stat->attendance,
+                    ];
+                }),
+            ];
+        });
+
+        return response()->json($output);
     }
 }
