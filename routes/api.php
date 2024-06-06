@@ -11,6 +11,6 @@ Route::get('/user', function (Request $request) {
 Route::prefix('tt2')->group(function () {
     Route::post('/raid_target', [TT2Controller::class, 'raidTargetCalc']);
     Route::post('/upload', [TT2Controller::class, 'uploadRaidReport']);
-    Route::post('/raid_attendance', [TT2Controller::class, 'raidAttendance']);
+    Route::get('/raid_attendance', [TT2Controller::class, 'raidAttendance']);
 });
 

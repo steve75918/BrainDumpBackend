@@ -261,7 +261,7 @@ class TT2ControllerTest extends TestCase
         $this->seed(TT2Seeder::class);
 
         // Action
-        $response = $this->postJson('/api/tt2/raid_attendance');
+        $response = $this->getJson('/api/tt2/raid_attendance');
 
         // Expections
         $response
@@ -277,6 +277,7 @@ class TT2ControllerTest extends TestCase
                         ]
                     ]
                 ]
-            ]);
+            ])
+            ->assertJsonCount(5, '*.raids');
     }
 }

@@ -13,6 +13,6 @@ class TT2RaidSeeder extends Seeder
      */
     public function run(): void
     {
-        TT2Raid::factory(3)->create();
+        TT2Raid::factory(10)->create();
     }
 }

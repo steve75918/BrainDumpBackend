@@ -115,7 +115,14 @@ class TT2Controller extends Controller
 
     public function raidAttendance(Request $request)
     {
-        $members = TT2Member::with(['raidStatistics.raid'])->get();
+        $members = TT2Member
+            ::with([
+                'raidStatistics' => function ($query) {
+                    $query->orderBy('created_at', 'DESC')->limit(5);
+                },
+                'raidStatistics.raid'
+            ])
+            ->get();
 
         $output = $members->map(function ($member) {
             return [
