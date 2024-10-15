@@ -23,7 +23,7 @@ class TT2Request extends FormRequest
     {
         return [
             'inputs'   => ['required', 'array'],
-            'inputs.*' => ['required', 'numeric', 'between:0.1,999.9'],
+            'inputs.*' => ['required', 'numeric', 'between:0.1,9999.9'],
         ];
     }
 }
